@@ -1,22 +1,21 @@
 import React from 'react';
 import './Form.css';
 
-const FormSignup = () => {
+const NumCounter = () => {
 
 
   return (
     <div className='form-content-right'>
-      <form className='form' noValidate>
+      <div className='form' noValidate>
         <h1>
           Numeric Counter
         </h1>
         <div className='form-inputs'>
-          <label className='form-label'>Username</label>
           <input
             className='form-input'
-            type='text'
+            type='number'
             name='username'
-            placeholder='Enter your username'
+            placeholder='Enter your number'
           />
         </div>
         <button className='form-input-btn' type='submit'>
@@ -32,9 +31,9 @@ const FormSignup = () => {
         <button className='form-input-btn' type='submit'>
           getCount
         </button>
-      </form>
+      </div>
     </div>
   );
 };
 
-export default FormSignup;
+export default NumCounter;
