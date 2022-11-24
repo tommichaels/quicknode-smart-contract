@@ -13,9 +13,9 @@ const NumCounter = () => {
   
   const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
   
-  const MoodContractAddress = "0xB14BcD541BD36B02858e780982a907b50Aa75Cdf";
+  const CounterContractAddress = "0xB14BcD541BD36B02858e780982a907b50Aa75Cdf";
 
-      const MoodContractABI = [
+      const CounterContractABI = [
         {
           "inputs": [],
           "name": "decrement",
@@ -83,28 +83,49 @@ const NumCounter = () => {
           "type": "function"
         }
       ];
-  let MoodContract;
+  let CounterContract;
   let signer;
   provider.send("eth_requestAccounts", []).then(() => {
   provider.listAccounts().then((accounts) => {
     signer = provider.getSigner(accounts[0]);
-    MoodContract = new ethers.Contract(
-      MoodContractAddress,
-      MoodContractABI,
+    CounterContract = new ethers.Contract(
+      CounterContractAddress,
+      CounterContractABI,
       signer
     );
   });
 });
-async function getCount() {
-  const getMoodPromise = MoodContract.getMood();
-  const Mood = await getMoodPromise;
-  console.log(Mood);
+
+// async function getCount() {
+//   const getCounterPromise = CounterContract.getCount();
+//   const Counter = await getCounterPromise;
+//   console.log(Counter);
+// }
+
+
+const getCount = async () => {
+  const getCounterPromise = new CounterContract.getCount();
+
+const Counter = await getCounterPromise;
+
+console.log(Counter);
 }
-async function setCount() {
-  const mood = document.getElementById("mood").value;
-  const setMoodPromise = MoodContract.setMood(mood);
-  await setMoodPromise;
+
+// async function setCount() {
+//   // const Counter = document.getElementById("counter").value;
+//   const setCounterPromise = CounterContract.setCount();
+//   await setCounterPromise;
+// }
+
+const setCount = async () => {
+  const setCounterPromise = new setCounterPromise((resolve, reject) => {
+    setTimeout(() => resolve("I am a done promise!"), 3000)
+});
+const Counter = await setCounterPromise;
+
+alert(Counter);
 }
+
   return (
 
     
@@ -128,10 +149,10 @@ async function setCount() {
           Decrement
         </button>
         <br></br>
-        <button className='form-input-btn' type='submit' onclick= {setCount()}>
+        <button onClick= {setCount} className='form-input-btn' type='submit' >
           Count
         </button>
-        <button  className='form-input-btn' type='submit' onclick= {getCount()}>
+        <button onClick= {getCount}  className='form-input-btn' type='submit' >
           getCount
         </button>
       </div>
