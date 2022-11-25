@@ -104,8 +104,9 @@ const NumCounter = () => {
 
 
 const getCount = async () => {
-  const getCounterPromise = new CounterContract.getCount();
-
+  const getCounterPromise = new getCounterPromise((resolve, reject) => {
+    setTimeout(() => resolve("I am a done promise!"), 3000)
+});
 const Counter = await getCounterPromise;
 
 console.log(Counter);
