@@ -1,6 +1,8 @@
 import React from 'react';
 import './Form.css';
-import FormSignup from './NumCounter';
+// import FormSignup from './NumCounter';
+
+import NumCounter from './NumCounter';
 
 const App = () => {
 
@@ -11,7 +13,7 @@ const App = () => {
         <div className='form-content-left'>
           <img className='form-img' src='/img/img-2.svg' alt='spaceship' />
         </div>
-        <FormSignup/>
+        <NumCounter />
       </div>
     </>
   );
