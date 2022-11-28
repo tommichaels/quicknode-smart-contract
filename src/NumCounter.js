@@ -131,6 +131,9 @@ alert(Counter);
 
     
     <div className='form-content-right'>
+       <button className='connect-btn' type='submit'>
+          Connect
+        </button>
       <div className='form' noValidate>
         <h1>
           Numeric Counter
@@ -143,9 +146,7 @@ alert(Counter);
             placeholder='Enter your number'
           />
         </div>
-        <button className='form-input-btn' type='submit'>
-          Increment
-        </button>
+       
         <button className='form-input-btn' type='submit'>
           Decrement
         </button>
