@@ -216,32 +216,38 @@ const NumCounter = () => {
 
     
     <div className='form-content-right'>
-       <button onClick= {connectWalletHandler} className='connect-btn' type='submit'>
-          Connect
+       <button onClick= {connectWalletHandler} className='connect-btn'>
+          {connButtonText}
         </button>
-      <div className='form' noValidate>
+      <div className='form' >
         <h1>
-          Address:
+          Address: {defaultAccount}
         </h1>
-        <div className='form-inputs'>
+        <form onSubmit={setHandler} className='form-inputs'>
+      
           <input
             className='form-input'
+            id='setText'
             type='name'
             name='name'
             placeholder='Enter new contract value'
           />
-        </div>
-       
-        <button className='form-input-btn' type='submit'>
+          <button className='form-input-btn' type='submit'>
           Update Contract 
         </button>
+        
+        </form>
+       
+        
         <br></br>
-        <button onClick= {onClickTest} className='form-input-btn' type='submit' >
+        <button onClick= {getCurrentVal} className='form-input-btn' >
           View current contract value
         </button>
         <h1>
         current contract value:
         </h1>
+        {currentContractVal}
+        {errorMessage}
         {/* <button onClick= {getCount}  className='form-input-btn' type='submit' >
           getCount
         </button> */}
