@@ -1,135 +1,3 @@
-// import React from 'react';
-// import './Form.css';
-// import { ethers } from 'ethers';
-
-// const NumCounter = () => {
-
-//   window.ethereum.enable();
-
-//   // var provider = new ethers.providers.Web3Provider(
-//   //   web3.currentProvider,
-//   //   "ropsten"
-//   // );
-  
-//   const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
-  
-//   const CounterContractAddress = "0xB14BcD541BD36B02858e780982a907b50Aa75Cdf";
-
-//       const CounterContractABI = [
-//         {
-//           "inputs": [],
-//           "name": "decrement",
-//           "outputs": [],
-//           "stateMutability": "nonpayable",
-//           "type": "function"
-//         },
-//         {
-//           "anonymous": false,
-//           "inputs": [
-//             {
-//               "indexed": false,
-//               "internalType": "uint256",
-//               "name": "value",
-//               "type": "uint256"
-//             }
-//           ],
-//           "name": "Decrement",
-//           "type": "event"
-//         },
-//         {
-//           "inputs": [],
-//           "name": "increment",
-//           "outputs": [],
-//           "stateMutability": "nonpayable",
-//           "type": "function"
-//         },
-//         {
-//           "anonymous": false,
-//           "inputs": [
-//             {
-//               "indexed": false,
-//               "internalType": "uint256",
-//               "name": "value",
-//               "type": "uint256"
-//             }
-//           ],
-//           "name": "Increment",
-//           "type": "event"
-//         },
-//         {
-//           "inputs": [],
-//           "name": "count",
-//           "outputs": [
-//             {
-//               "internalType": "uint256",
-//               "name": "",
-//               "type": "uint256"
-//             }
-//           ],
-//           "stateMutability": "view",
-//           "type": "function"
-//         },
-//         {
-//           "inputs": [],
-//           "name": "getCount",
-//           "outputs": [
-//             {
-//               "internalType": "uint256",
-//               "name": "",
-//               "type": "uint256"
-//             }
-//           ],
-//           "stateMutability": "view",
-//           "type": "function"
-//         }
-//       ];
-//   let CounterContract;
-//   let signer;
-//   provider.send("eth_requestAccounts", []).then(() => {
-//   provider.listAccounts().then((accounts) => {
-//     signer = provider.getSigner(accounts[0]);
-//     CounterContract = new ethers.Contract(
-//       CounterContractAddress,
-//       CounterContractABI,
-//       signer
-//     );
-//   });
-// });
-
-// // async function getCount() {
-// //   const getCounterPromise = CounterContract.getCount();
-// //   const Counter = await getCounterPromise;
-// //   console.log(Counter);
-// // }
-
-
-// const getCount = async () => {
-//   const getCounterPromise = new getCounterPromise((resolve, reject) => {
-//     setTimeout(() => resolve("I am a done promise!"), 3000)
-// });
-
-// const Counter = await getCounterPromise;
-
-// console.log(Counter);
-// }
-
-// // async function setCount() {
-// //   // const Counter = document.getElementById("counter").value;
-// //   const setCounterPromise = CounterContract.setCount();
-// //   await setCounterPromise;
-// // }
-
-// const setCount = async () => {
-//   const setCounterPromise = new setCounterPromise((resolve, reject) => {
-//     setTimeout(() => resolve("I am a done promise!"), 3000)
-// });
-// const Counter = await setCounterPromise;
-
-// alert(Counter);
-// }
-
-// https://docs.metamask.io/guide/ethereum-provider.html#using-the-provider
-
 import React, {useState} from 'react';
 import {ethers} from 'ethers';
 import SimpleStorage_abi from '../src/Contracts/SimpleStorage_abi.json';
@@ -138,7 +6,9 @@ const NumCounter = () => {
 // const SimpleStorage = () => {
 
 	// deploy simple storage contract and paste deployed contract address here. This value is local ganache chain
-	let contractAddress = '0xCF31E7c9E7854D7Ecd3F3151a9979BC2a82B4fe3';
+	// let provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
+  
+  let contractAddress = '0xB9187f9a9EB3d0Db336832ff70E1fE1F2e1F439d';
 
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [defaultAccount, setDefaultAccount] = useState(null);
@@ -149,6 +19,7 @@ const NumCounter = () => {
 	const [provider, setProvider] = useState(null);
 	const [signer, setSigner] = useState(null);
 	const [contract, setContract] = useState(null);
+  
 
 	const connectWalletHandler = () => {
 		if (window.ethereum && window.ethereum.isMetaMask) {
@@ -191,6 +62,8 @@ const NumCounter = () => {
 	window.ethereum.on('chainChanged', chainChangedHandler);
 
 	const updateEthers = () => {
+    // const provider = new ethers.providers.Web3Provider(window.ethereum, "goerli");
+    // const provider = new ethers.providers.JsonRpcProvider("HTTP://127.0.0.1:7545")
 		let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
 		setProvider(tempProvider);
 
@@ -203,12 +76,13 @@ const NumCounter = () => {
 
 	const setHandler = (event) => {
 		event.preventDefault();
+    
+		contract.store(event.target.setText.value);
 		console.log('sending ' + event.target.setText.value + ' to the contract');
-		contract.set(event.target.setText.value);
 	}
 
 	const getCurrentVal = async () => {
-		let val = await contract.get();
+		let val = await contract.retrieve();
 		setCurrentContractVal(val);
 	}
 
@@ -228,9 +102,8 @@ const NumCounter = () => {
           <input
             className='form-input'
             id='setText'
-            type='name'
-            name='name'
-            placeholder='Enter new contract value'
+            type='number'
+            placeholder='Enter new contract number'
           />
           <button className='form-input-btn' type='submit'>
           Update Contract 
